@@ -44,5 +44,5 @@ interface IBank {
      * has in their own account (including interest).
      * @return - the value of the caller's balance with interest, excluding debts.
      */
-    function getBalance() external view returns (uint256);
+    function getBalance(address sender) external view returns (uint256);
 }

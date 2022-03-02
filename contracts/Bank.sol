@@ -43,17 +43,16 @@ contract Bank is IBank {
         return withdrawAmount;
     }
 
-    function getDiferenceOfLastInterestBlockUntilNow(uint256 lastInterestBlock) private returns(uint256) {
+    function getDiferenceOfLastInterestBlockUntilNow(uint256 lastInterestBlock) private view returns(uint256) {
         return block.number - lastInterestBlock;
     }
 
-    function getRate(uint256 amount, uint256 blocks) private returns (uint256) {
+    function getRate(uint256 amount, uint256 blocks) private view returns  (uint256) {
         return (30 * ((blocks/100) * 1000) * (amount* 100)) / 1000;
     }
 
 
-    function getBalance() external view  override returns (uint256) {
-        return accounts[msg.sender].deposit;
+    function getBalance(address sender) external  view override returns (uint256) {
+        return accounts[sender].deposit+  getRate(accounts[sender].deposit,getDiferenceOfLastInterestBlockUntilNow(accounts[sender].lastInterestBlock));
     }
-
 }
